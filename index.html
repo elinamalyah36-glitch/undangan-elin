@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan - Elin & Reo</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sunflower: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                        },
+                        amberGold: '#d97706',
+                        warmBrown: '#451a03',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        cursive: ['Dancing Script', 'cursive'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                        'bounce-gentle': 'bounce 2s infinite',
+                        'pulse-slow': 'pulse 3s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fffbeb;
+            color: #451a03;
+            overflow-x: hidden;
+        }
+        
+        .font-cursive {
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .font-serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Glassmorphism card effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            box-shadow: 0 10px 30px -5px rgba(217, 119, 6, 0.1);
+        }
+
+        /* Sunflower SVG Background Pattern */
+        .bg-sunflower-pattern {
+            background-image: radial-gradient(#fde68a 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fffbeb;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fbbf24;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d97706;
+        }
+    </style>
+</head>
+<body class="bg-sunflower-50 bg-sunflower-pattern">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 bg-sunflower-800 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-sunflower-300 text-xl"></i>
+        <span id="toast-message" class="text-sm font-medium">Berhasil disalin!</span>
+    </div>
+
+    <!-- Audio Player Button (Floating) -->
+    <button id="musicToggle" class="fixed bottom-6 left-6 z-40 bg-sunflower-500 hover:bg-sunflower-600 text-white p-3.5 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 flex items-center justify-center border-2 border-white focus:outline-none">
+        <i id="musicIcon" class="fa-solid fa-music text-lg animate-spin-slow"></i>
+    </button>
+    <audio id="bgMusic" loop preload="auto">
+        <!-- Relaxing acoustic guitar summer background music -->
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-acoustic-guitar-114420.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- FULLSCREEN COVER OVERLAY -->
+    <div id="coverOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-cover bg-center transition-transform duration-1000 bg-amber-950/40 backdrop-blur-sm" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1595066138097-24f28562d294?q=80&w=1600&auto=format&fit=crop');">
+        
+        <div class="text-center text-white p-6 max-w-lg mx-auto flex flex-col items-center justify-between h-full py-16">
+            <!-- Top Floral Ornament -->
+            <div class="animate-bounce-gentle">
+                <svg class="w-16 h-16 text-sunflower-400 fill-current" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="18" fill="#78350f" />
+                    <!-- Sunflower Petals -->
+                    <g fill="#fbbf24">
+                        <path d="M50 0 C45 20 45 20 50 32 C55 20 55 20 50 0 Z"/>
+                        <path d="M50 100 C45 80 45 80 50 68 C55 80 55 80 50 100 Z"/>
+                        <path d="M0 50 C20 45 20 45 32 50 C20 55 20 55 0 50 Z"/>
+                        <path d="M100 50 C80 45 80 45 68 50 C80 55 80 55 100 50 Z"/>
+                        <path d="M15 15 C30 25 30 25 37 37 C25 30 25 30 15 15 Z"/>
+                        <path d="M85 85 C70 75 70 75 63 63 C75 70 75 70 85 85 Z"/>
+                        <path d="M85 15 C75 30 75 30 63 37 C70 25 70 25 85 15 Z"/>
+                        <path d="M15 85 C25 70 25 70 37 63 C30 75 30 75 15 85 Z"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Header Title -->
+            <div class="space-y-4">
+                <p class="uppercase tracking-widest text-xs font-semibold text-sunflower-200">The Wedding Announcement</p>
+                <h1 class="font-cursive text-6xl md:text-7xl text-sunflower-300 drop-shadow-md">Elin & Reo</h1>
+                <p class="text-sm font-light text-slate-200 tracking-wide">Jumat, 01 Januari 2027</p>
+            </div>
+
+            <!-- Guest Invitation Box -->
+            <div class="w-full bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-xl space-y-3">
+                <p class="text-xs uppercase tracking-wider text-sunflower-100 font-medium">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
+                <div class="text-xl font-bold text-white tracking-wide" id="guestName">Tamu Undangan</div>
+                <p class="text-xs text-slate-300 italic">Tanpa Mengurangi Rasa Hormat, Kami Mengundang Anda Untuk Hadir Di Acara Pernikahan Kami.</p>
+                
+                <button onclick="openInvitation()" class="mt-4 w-full bg-gradient-to-r from-sunflower-400 to-sunflower-500 hover:from-sunflower-500 hover:to-sunflower-600 text-amber-950 font-bold py-3.5 px-6 rounded-xl shadow-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-envelope-open text-lg"></i>
+                    <span>Buka Undangan</span>
+                </button>
+            </div>
+
+            <p class="text-xs text-sunflower-200/80">#SunflowerSummerJoy</p>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-2xl mx-auto px-4 py-8 space-y-16">
+
+        <!-- HEADER HERO SECTION -->
+        <section class="text-center space-y-6 pt-10" data-aos="fade-up">
+            <div class="inline-block p-3 rounded-full bg-sunflower-100 text-sunflower-600 mb-2">
+                <i class="fa-solid fa-sun text-3xl animate-spin-slow"></i>
+            </div>
+            <p class="uppercase tracking-[0.3em] text-xs font-semibold text-sunflower-700">Walimatul 'Ursy</p>
+            <h1 class="font-cursive text-6xl md:text-7xl text-sunflower-600 font-bold">Elin & Reo</h1>
+            <p class="font-serif-title italic text-sunflower-900 text-lg">"Menjalin Kasih dalam Kehangatan Cinta Abadi"</p>
+            
+            <!-- Hero Image Banner -->
+            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white h-96">
+                <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1000&auto=format&fit=crop" alt="Elin & Reo Prewedding" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-amber-950/60 via-transparent to-transparent flex items-end justify-center pb-6">
+                    <p class="text-white text-sm tracking-widest uppercase font-medium">01 Januari 2027 • Gedung Diponegoro</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- AYAT SUCI / QUOTE SECTION -->
+        <section class="glass-card rounded-3xl p-8 text-center space-y-4" data-aos="fade-up">
+            <i class="fa-solid fa-quote-left text-3xl text-sunflower-400"></i>
+            <p class="text-sm md:text-base leading-relaxed text-sunflower-900 italic">
+                "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang."
+            </p>
+            <p class="text-xs font-bold uppercase tracking-wider text-sunflower-700">QS. Ar-Rum: 21</p>
+        </section>
+
+        <!-- MEMPELAI / BRIDE & GROOM SECTION -->
+        <section class="space-y-8" data-aos="fade-up">
+            <div class="text-center space-y-2">
+                <h2 class="font-serif-title text-3xl font-bold text-sunflower-900">Pasangan Mempelai</h2>
+                <p class="text-xs text-sunflower-700 uppercase tracking-widest">Dengan Memohon Rahmat & Ridho Allah SWT</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Groom Card -->
+                <div class="glass-card rounded-3xl p-6 text-center space-y-4 hover:shadow-xl transition-all border-t-4 border-sunflower-500" data-aos="fade-right">
+                    <div class="relative w-40 h-40 mx-auto rounded-full overflow-hidden border-4 border-sunflower-300 shadow-md">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop" alt="Reo" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h3 class="font-cursive text-4xl text-sunflower-700 font-bold">Reo Pratama, S.T.</h3>
+                        <p class="text-xs font-semibold text-sunflower-900 mt-1">Mempelai Pria</p>
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Putra Pertama dari<br>
+                        <span class="font-medium text-slate-800">Bpk. H. Bambang Subagyo</span> & <span class="font-medium text-slate-800">Ibu Hj. Siti Rahmah</span>
+                    </p>
+                    <a href="https://instagram.com" target="_blank" class="inline-flex items-center gap-2 text-xs font-semibold text-sunflower-700 hover:text-sunflower-900 bg-sunflower-100 px-4 py-2 rounded-full transition-colors">
+                        <i class="fa-brands fa-instagram text-base"></i>
+                        <span>@reo.pratama</span>
+                    </a>
+                </div>
+
+                <!-- Bride Card -->
+                <div class="glass-card rounded-3xl p-6 text-center space-y-4 hover:shadow-xl transition-all border-t-4 border-sunflower-500" data-aos="fade-left">
+                    <div class="relative w-40 h-40 mx-auto rounded-full overflow-hidden border-4 border-sunflower-300 shadow-md">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop" alt="Elin" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h3 class="font-cursive text-4xl text-sunflower-700 font-bold">Elin Anindya, S.Ked.</h3>
+                        <p class="text-xs font-semibold text-sunflower-900 mt-1">Mempelai Wanita</p>
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Putri Kedua dari<br>
+                        <span class="font-medium text-slate-800">Bpk. Drs. Agus Wijaya</span> & <span class="font-medium text-slate-800">Ibu Endang Lestari</span>
+                    </p>
+                    <a href="https://instagram.com" target="_blank" class="inline-flex items-center gap-2 text-xs font-semibold text-sunflower-700 hover:text-sunflower-900 bg-sunflower-100 px-4 py-2 rounded-full transition-colors">
+                        <i class="fa-brands fa-instagram text-base"></i>
+                        <span>@elin.anindya</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- COUNTDOWN TIMER SECTION -->
+        <section class="glass-card rounded-3xl p-8 text-center space-y-6 bg-gradient-to-br from-sunflower-100/80 to-amber-100/50" data-aos="zoom-in">
+            <h2 class="font-serif-title text-2xl font-bold text-sunflower-900">Menghitung Hari Bahagia</h2>
+            
+            <div class="grid grid-cols-4 gap-3 md:gap-4 max-w-md mx-auto">
+                <div class="bg-white p-3 md:p-4 rounded-2xl shadow-sm border border-sunflower-200">
+                    <span id="days" class="block font-bold text-2xl md:text-3xl text-sunflower-700">00</span>
+                    <span class="text-[10px] md:text-xs text-slate-500 uppercase tracking-wider font-medium">Hari</span>
+                </div>
+                <div class="bg-white p-3 md:p-4 rounded-2xl shadow-sm border border-sunflower-200">
+                    <span id="hours" class="block font-bold text-2xl md:text-3xl text-sunflower-700">00</span>
+                    <span class="text-[10px] md:text-xs text-slate-500 uppercase tracking-wider font-medium">Jam</span>
+                </div>
+                <div class="bg-white p-3 md:p-4 rounded-2xl shadow-sm border border-sunflower-200">
+                    <span id="minutes" class="block font-bold text-2xl md:text-3xl text-sunflower-700">00</span>
+                    <span class="text-[10px] md:text-xs text-slate-500 uppercase tracking-wider font-medium">Menit</span>
+                </div>
+                <div class="bg-white p-3 md:p-4 rounded-2xl shadow-sm border border-sunflower-200">
+                    <span id="seconds" class="block font-bold text-2xl md:text-3xl text-sunflower-700">00</span>
+                    <span class="text-[10px] md:text-xs text-slate-500 uppercase tracking-wider font-medium">Detik</span>
+                </div>
+            </div>
+
+            <p class="text-xs text-sunflower-800 italic">Jumat, 01 Januari 2027</p>
+        </section>
+
+        <!-- TIME & LOCATION SECTION -->
+        <section class="space-y-8" data-aos="fade-up">
+            <div class="text-center space-y-2">
+                <h2 class="font-serif-title text-3xl font-bold text-sunflower-900">Waktu & Lokasi Acara</h2>
+                <p class="text-xs text-sunflower-700 uppercase tracking-widest">Rangkaian Acara Pernikahan</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Akad Nikah Card -->
+                <div class="glass-card rounded-3xl p-6 text-center space-y-4 border-l-4 border-sunflower-500">
+                    <div class="w-12 h-12 bg-sunflower-100 text-sunflower-700 rounded-2xl flex items-center justify-center mx-auto text-xl">
+                        <i class="fa-solid fa-ring"></i>
+                    </div>
+                    <h3 class="font-serif-title text-xl font-bold text-sunflower-900">Akad Nikah</h3>
+                    <div class="space-y-1 text-sm text-slate-700">
+                        <p class="font-semibold text-sunflower-800">Jumat, 01 Januari 2027</p>
+                        <p><i class="fa-regular fa-clock text-sunflower-600 mr-2"></i>Pukul 10.00 WIB - Selesai</p>
+                    </div>
+                    <div class="pt-2 text-xs text-slate-600">
+                        <p class="font-bold text-slate-800">Gedung Diponegoro</p>
+                        <p>Jl. Diponegoro No. 45, Semarang</p>
+                    </div>
+                </div>
+
+                <!-- Resepsi Card -->
+                <div class="glass-card rounded-3xl p-6 text-center space-y-4 border-l-4 border-sunflower-500">
+                    <div class="w-12 h-12 bg-sunflower-100 text-sunflower-700 rounded-2xl flex items-center justify-center mx-auto text-xl">
+                        <i class="fa-solid fa-champagne-glasses"></i>
+                    </div>
+                    <h3 class="font-serif-title text-xl font-bold text-sunflower-900">Resepsi Pernikahan</h3>
+                    <div class="space-y-1 text-sm text-slate-700">
+                        <p class="font-semibold text-sunflower-800">Jumat, 01 Januari 2027</p>
+                        <p><i class="fa-regular fa-clock text-sunflower-600 mr-2"></i>Pukul 11.30 WIB - Selesai</p>
+                    </div>
+                    <div class="pt-2 text-xs text-slate-600">
+                        <p class="font-bold text-slate-800">Gedung Diponegoro</p>
+                        <p>Jl. Diponegoro No. 45, Semarang</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Map Embed Box -->
+            <div class="glass-card rounded-3xl p-6 text-center space-y-4" data-aos="fade-up">
+                <div class="flex items-center justify-center gap-2 text-sunflower-800 font-semibold">
+                    <i class="fa-solid fa-location-dot text-sunflower-600"></i>
+                    <span>Peta Lokasi Acara</span>
+                </div>
+                <!-- Interactive Map Frame -->
+                <div class="w-full h-64 rounded-2xl overflow-hidden border-2 border-sunflower-200">
+                    <iframe class="w-full h-full border-0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.226078716262!2d110.41872127499708!3d-6.994432193006767!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708b5ea62153b9%3A0x6b7a544b61cf1c81!2sJl.%20Diponegoro%2C%20Kota%20Semarang%2C%20Jawa%20Tengah!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <a href="https://maps.google.com/?q=Gedung+Diponegoro+Semarang" target="_blank" class="inline-flex items-center justify-center gap-2 w-full md:w-auto bg-sunflower-500 hover:bg-sunflower-600 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition-all transform hover:scale-105">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span>Buka Google Maps</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- PREWEDDING GALLERY -->
+        <section class="space-y-6" data-aos="fade-up">
+            <div class="text-center space-y-2">
+                <h2 class="font-serif-title text-3xl font-bold text-sunflower-900">Galeri Prewedding</h2>
+                <p class="text-xs text-sunflower-700 uppercase tracking-widest">Momen Indah Perjalanan Kami</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <div class="rounded-2xl overflow-hidden h-48 md:h-64 border-2 border-white shadow-md hover:opacity-90 transition-opacity">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Prewedding 1">
+                </div>
+                <div class="rounded-2xl overflow-hidden h-48 md:h-64 border-2 border-white shadow-md hover:opacity-90 transition-opacity">
+                    <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Prewedding 2">
+                </div>
+                <div class="rounded-2xl overflow-hidden h-48 md:h-64 border-2 border-white shadow-md hover:opacity-90 transition-opacity">
+                    <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Prewedding 3">
+                </div>
+                <div class="rounded-2xl overflow-hidden h-48 md:h-64 border-2 border-white shadow-md hover:opacity-90 transition-opacity">
+                    <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Prewedding 4">
+                </div>
+                <div class="rounded-2xl overflow-hidden h-48 md:h-64 border-2 border-white shadow-md hover:opacity-90 transition-opacity">
+                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Prewedding 5">
+                </div>
+                <div class="rounded-2xl overflow-hidden h-48 md:h-64 border-2 border-white shadow-md hover:opacity-90 transition-opacity">
+                    <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Prewedding 6">
+                </div>
+            </div>
+        </section>
+
+        <!-- DIGITAL GIFT / AMPLOP DIGITAL -->
+        <section class="glass-card rounded-3xl p-8 text-center space-y-6" data-aos="fade-up">
+            <div class="space-y-2">
+                <i class="fa-solid fa-gift text-3xl text-sunflower-500"></i>
+                <h2 class="font-serif-title text-3xl font-bold text-sunflower-900">Amplop Digital</h2>
+                <p class="text-xs text-slate-600 max-w-md mx-auto">Doa restu Anda merupakan karunia terindah. Namun jika ingin memberikan tanda kasih, Anda dapat menggunakan amplop digital di bawah ini:</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                <!-- BCA Card -->
+                <div class="bg-white p-5 rounded-2xl border border-sunflower-200 shadow-sm space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-blue-800 text-lg">BCA</span>
+                        <i class="fa-solid fa-credit-card text-sunflower-400"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500">Nomor Rekening:</p>
+                        <p class="font-mono font-bold text-slate-800 text-lg" id="rekaBca">8830192847</p>
+                    </div>
+                    <p class="text-xs font-medium text-slate-600">a.n. Elin Anindya</p>
+                    <button onclick="copyToClipboard('8830192847', 'BCA')" class="w-full bg-sunflower-100 hover:bg-sunflower-200 text-sunflower-800 text-xs font-semibold py-2.5 px-4 rounded-xl transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-copy"></i>
+                        <span>Salin Rekening BCA</span>
+                    </button>
+                </div>
+
+                <!-- Mandiri Card -->
+                <div class="bg-white p-5 rounded-2xl border border-sunflower-200 shadow-sm space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-blue-900 text-lg">MANDIRI</span>
+                        <i class="fa-solid fa-credit-card text-sunflower-400"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500">Nomor Rekening:</p>
+                        <p class="font-mono font-bold text-slate-800 text-lg" id="rekMandiri">1370019283741</p>
+                    </div>
+                    <p class="text-xs font-medium text-slate-600">a.n. Reo Pratama</p>
+                    <button onclick="copyToClipboard('1370019283741', 'Mandiri')" class="w-full bg-sunflower-100 hover:bg-sunflower-200 text-sunflower-800 text-xs font-semibold py-2.5 px-4 rounded-xl transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-copy"></i>
+                        <span>Salin Rekening Mandiri</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- QRIS SECTION -->
+            <div class="bg-white p-6 rounded-2xl border border-sunflower-200 shadow-sm space-y-4 max-w-sm mx-auto">
+                <span class="font-bold text-slate-800 tracking-wider">QRIS STANDAR PEMBAYARAN</span>
+                <div class="p-3 bg-sunflower-50 rounded-xl border border-sunflower-100 inline-block">
+                    <!-- Clean generated QR Code placeholder -->
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=AmplopDigitalElinReo" alt="QRIS Scan" class="w-44 h-44 mx-auto">
+                </div>
+                <p class="text-xs text-slate-500">Scan QRIS menggunakan GoPay, OVO, Dana, ShopeePay, atau Mobile Banking.</p>
+            </div>
+        </section>
+
+        <!-- RSVP & WISHES FORM SECTION -->
+        <section class="glass-card rounded-3xl p-8 space-y-8" data-aos="fade-up">
+            <div class="text-center space-y-2">
+                <i class="fa-solid fa-comments text-3xl text-sunflower-500"></i>
+                <h2 class="font-serif-title text-3xl font-bold text-sunflower-900">Konfirmasi Kehadiran & Doa</h2>
+                <p class="text-xs text-slate-600">Kirimkan Ucapan & Konfirmasi Kehadiran Anda</p>
+            </div>
+
+            <!-- RSVP Form -->
+            <form id="rsvpForm" onsubmit="handleRSVP(event)" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Lengkap</label>
+                    <input type="text" id="guestInputName" required placeholder="Masukkan Nama Anda" class="w-full px-4 py-3 rounded-xl border border-sunflower-200 focus:outline-none focus:ring-2 focus:ring-sunflower-400 bg-white/80 text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Konfirmasi Kehadiran</label>
+                    <select id="attendanceSelect" required class="w-full px-4 py-3 rounded-xl border border-sunflower-200 focus:outline-none focus:ring-2 focus:ring-sunflower-400 bg-white/80 text-sm">
+                        <option value="Hadir">Ya, Saya Akan Hadir</option>
+                        <option value="Tidak Hadir">Maaf, Saya Tidak Bisa Hadir</option>
+                        <option value="Ragu-ragu">Masih Ragu-ragu</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Ucapan & Doa Restu</label>
+                    <textarea id="wishMessage" required rows="3" placeholder="Tuliskan harapan dan doa terbaik untuk mempelai..." class="w-full px-4 py-3 rounded-xl border border-sunflower-200 focus:outline-none focus:ring-2 focus:ring-sunflower-400 bg-white/80 text-sm"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-sunflower-500 hover:bg-sunflower-600 text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>Kirim Ucapan</span>
+                </button>
+            </form>
+
+            <!-- Wishes List Display -->
+            <div class="space-y-4 pt-4 border-t border-sunflower-200">
+                <h3 class="text-sm font-bold text-sunflower-900 text-left flex items-center gap-2">
+                    <i class="fa-solid fa-heart text-red-500"></i>
+                    <span>Ucapan dari Sahabat & Keluarga (<span id="wishCount">3</span>)</span>
+                </h3>
+
+                <div id="wishesContainer" class="space-y-3 max-h-80 overflow-y-auto pr-1 text-left">
+                    <!-- Mock Initial Wishes -->
+                    <div class="bg-white/90 p-4 rounded-2xl border border-sunflower-100 shadow-sm space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-xs text-sunflower-900">Budi Santoso</span>
+                            <span class="text-[10px] bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Hadir</span>
+                        </div>
+                        <p class="text-xs text-slate-600">Selamat untuk Elin & Reo! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah. Lancar sampai hari H!</p>
+                        <span class="text-[10px] text-slate-400 block pt-1">Baru saja</span>
+                    </div>
+
+                    <div class="bg-white/90 p-4 rounded-2xl border border-sunflower-100 shadow-sm space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-xs text-sunflower-900">Siti Rahmawati</span>
+                            <span class="text-[10px] bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Hadir</span>
+                        </div>
+                        <p class="text-xs text-slate-600">Happy wedding Elin dan Reo! Bahagia selalu kalian berdua selamanya ❤️</p>
+                        <span class="text-[10px] text-slate-400 block pt-1">1 jam yang lalu</span>
+                    </div>
+
+                    <div class="bg-white/90 p-4 rounded-2xl border border-sunflower-100 shadow-sm space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-xs text-sunflower-900">Andi Pratama</span>
+                            <span class="text-[10px] bg-amber-100 text-amber-700 font-semibold px-2 py-0.5 rounded-full">Ragu-ragu</span>
+                        </div>
+                        <p class="text-xs text-slate-600">Selamat ya bro Reo & Elin! Semoga berkah selalu pernikahannya.</p>
+                        <span class="text-[10px] text-slate-400 block pt-1">3 jam yang lalu</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center space-y-4 pt-6 pb-12" data-aos="fade-up">
+            <h2 class="font-cursive text-4xl text-sunflower-700 font-bold">Elin & Reo</h2>
+            <p class="text-xs text-slate-500 leading-relaxed">
+                Merupakan suatu kehormatan dan kebahagiaan bagi kami<br>
+                apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+            </p>
+            <p class="text-[10px] text-sunflower-800 uppercase tracking-widest font-semibold pt-4">Sunflower Summer Joy Wedding • 2027</p>
+        </footer>
+
+    </main>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // URL Guest Name Parsing (?to=Nama)
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const guest = urlParams.get('to');
+            if (guest) {
+                document.getElementById('guestName').innerText = decodeURIComponent(guest);
+            }
+        });
+
+        // Audio & Cover Logic
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+        let isPlaying = false;
+
+        function openInvitation() {
+            const cover = document.getElementById('coverOverlay');
+            cover.classList.add('-translate-y-full');
+            
+            // Play Audio
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                musicIcon.classList.add('animate-spin-slow');
+            }).catch(e => console.log("Autoplay blocked:", e));
+        }
+
+        musicToggle.addEventListener('click', function() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicIcon.classList.remove('animate-spin-slow');
+                musicIcon.classList.replace('fa-music', 'fa-volume-xmark');
+            } else {
+                bgMusic.play();
+                musicIcon.classList.add('animate-spin-slow');
+                musicIcon.classList.replace('fa-volume-xmark', 'fa-music');
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Countdown Timer Target: 01 January 2027 10:00:00
+        const targetDate = new Date("January 1, 2027 10:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days < 10 ? '0' + days : days;
+                document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById("seconds").innerText = seconds < 10 ? '0' + seconds : seconds;
+            } else {
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Clipboard Copy Logic with Toast
+        function copyToClipboard(text, bankName) {
+            // Using execCommand fallback for frame safety
+            const tempInput = document.createElement("input");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            showToast(`No. Rekening ${bankName} (${text}) berhasil disalin!`);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            const toastMessage = document.getElementById("toast-message");
+            toastMessage.innerText = message;
+            
+            toast.classList.remove("translate-y-32", "opacity-0");
+            toast.classList.add("translate-y-0", "opacity-100");
+
+            setTimeout(() => {
+                toast.classList.remove("translate-y-0", "opacity-100");
+                toast.classList.add("translate-y-32", "opacity-0");
+            }, 3000);
+        }
+
+        // Dynamic RSVP Form Submission
+        let currentWishCount = 3;
+
+        function handleRSVP(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('guestInputName').value;
+            const status = document.getElementById('attendanceSelect').value;
+            const message = document.getElementById('wishMessage').value;
+
+            if(!name || !message) return;
+
+            let badgeColor = "bg-green-100 text-green-700";
+            if (status === "Tidak Hadir") badgeColor = "bg-red-100 text-red-700";
+            if (status === "Ragu-ragu") badgeColor = "bg-amber-100 text-amber-700";
+
+            const container = document.getElementById('wishesContainer');
+            const newWish = document.createElement('div');
+            newWish.className = "bg-white/90 p-4 rounded-2xl border border-sunflower-100 shadow-sm space-y-1 transform transition-all duration-500 scale-95 opacity-0";
+            
+            newWish.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="font-bold text-xs text-sunflower-900">${escapeHTML(name)}</span>
+                    <span class="text-[10px] ${badgeColor} font-semibold px-2 py-0.5 rounded-full">${status}</span>
+                </div>
+                <p class="text-xs text-slate-600">${escapeHTML(message)}</p>
+                <span class="text-[10px] text-slate-400 block pt-1">Baru saja</span>
+            `;
+
+            container.prepend(newWish);
+
+            // Animate addition
+            setTimeout(() => {
+                newWish.classList.remove('scale-95', 'opacity-0');
+                newWish.classList.add('scale-100', 'opacity-100');
+            }, 50);
+
+            // Update Count
+            currentWishCount++;
+            document.getElementById('wishCount').innerText = currentWishCount;
+
+            // Reset form
+            document.getElementById('rsvpForm').reset();
+            showToast("Terima kasih atas ucapan & konfirmasi Anda!");
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag)
+            );
+        }
+    </script>
+</body>
+</html>
